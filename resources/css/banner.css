@@ -1,0 +1,19 @@
+    .banner {
+        position: relative;
+        background-image: url(https://wallpaper.dog/large/5549717.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+
+    }
+
+    .banner::before {
+        content: "";
+        background: linear-gradient(263deg, rgba(41, 105, 3, 1) 3%, rgba(8, 28, 4, 1) 43%, rgba(7, 25, 4, 1) 74%);
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.9;
+
+    }
