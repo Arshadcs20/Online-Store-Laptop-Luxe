@@ -10,7 +10,7 @@ class Order extends Model
         'user_id',
         'total',
         'status',
-        'customer_name',
+        'customer_name',      // Add these fields to the fillable array
         'customer_email',
         'customer_address',
     ];

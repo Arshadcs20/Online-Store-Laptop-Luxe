@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 
 class CheckoutController extends Controller
 {
@@ -29,12 +30,24 @@ class CheckoutController extends Controller
             return $item->product->resale_price * $item->quantity;
         });
 
+        // Validate the input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'address' => 'required|string|max:255',
+        ]);
+
+        // Create the order
         $order = Order::create([
             'user_id' => $user->id,
+            'customer_name' => $request->name,
+            'customer_email' => $request->email,
+            'customer_address' => $request->address,
             'total' => $total,
             'status' => 'pending',
         ]);
 
+        // Create order items
         foreach ($cartItems as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
@@ -44,7 +57,8 @@ class CheckoutController extends Controller
             ]);
         }
 
-        Cart::where('user_id', $user->id)->delete();
+        // Clear the cart
+        $cartItems->each->delete();
 
         return redirect()->route('orders.show', $order->id)->with('success', 'Order placed successfully.');
     }

@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmation;
 
 class OrderController extends Controller
 {
@@ -51,7 +53,19 @@ class OrderController extends Controller
             ]);
         }
 
-        return redirect()->route('orders.show', $order->id)->with('success', 'Order placed successfully.');
+        // Attempt to send confirmation email
+        try {
+            Mail::to($request->email)->send(new OrderConfirmation($order));
+            $emailSent = true;
+        } catch (\Exception $e) {
+            $emailSent = false;
+        }
+
+        // Flash message based on email sending status
+        $message = $emailSent ? 'Order placed successfully. A confirmation email has been sent.' : 'Order placed successfully,
+but we could not send a confirmation email.';
+
+        return redirect()->route('orders.show', $order->id)->with('success', $message);
     }
 
     public function show(Order $order)

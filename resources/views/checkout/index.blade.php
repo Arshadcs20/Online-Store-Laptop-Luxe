@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Checkout</h1>
+    <h1 class="text-center my-2">Checkout</h1>
     @if($cartItems->isEmpty())
         <p>Your cart is empty.</p>
     @else
@@ -30,6 +30,9 @@
                 </tr>
             </tbody>
         </table>
+        <!-- <hr> -->
+        <h1 class="my-5 text-center font-extrabold  ">Shipping Info</h1>
+
         <form action="{{ route('checkout.store') }}" method="POST">
             @csrf
             <div class="form-group">
