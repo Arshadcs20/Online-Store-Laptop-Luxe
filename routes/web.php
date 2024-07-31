@@ -10,35 +10,11 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminDashboardController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-// Resource routes for LaptopController
 Route::resource('laptops', LaptopController::class);
 Route::resource('products', ProductController::class);
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
-//     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-//     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
-//     Route::post('orders/store/{product}', [OrderController::class, 'store'])->name('orders.store');
-//     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-
-//     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-//     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-// });
-
-// new routes 
-// Checkout routes
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::get('/test-email', [App\Http\Controllers\TestEmailController::class, 'sendTestEmail']);
